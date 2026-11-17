@@ -1,0 +1,118 @@
+{
+  "name": "markdown-document-reader",
+  "displayName": "Markdown Document Reader",
+  "description": "Read Markdown files in a calm, document-style preview with live updates, a table of contents, and reading controls.",
+  "version": "0.1.0",
+  "publisher": "local",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AbdulMuneebAsif/vscode-markdown-reader.git"
+  },
+  "homepage": "https://github.com/AbdulMuneebAsif/vscode-markdown-reader#readme",
+  "bugs": {
+    "url": "https://github.com/AbdulMuneebAsif/vscode-markdown-reader/issues"
+  },
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "keywords": [
+    "markdown",
+    "preview",
+    "reader",
+    "document",
+    "md"
+  ],
+  "activationEvents": [
+    "onCommand:markdownDocumentReader.openPreview",
+    "onCommand:markdownDocumentReader.openPreviewToSide"
+  ],
+  "main": "./src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "markdownDocumentReader.openPreview",
+        "title": "Open Document Preview",
+        "category": "Markdown Reader",
+        "icon": "$(book-open)"
+      },
+      {
+        "command": "markdownDocumentReader.openPreviewToSide",
+        "title": "Open Document Preview to the Side",
+        "category": "Markdown Reader",
+        "icon": "$(open-preview)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "markdownDocumentReader.openPreviewToSide",
+          "when": "resourceExtname == .md",
+          "group": "navigation@10"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "markdownDocumentReader.openPreview",
+          "when": "resourceExtname == .md",
+          "group": "navigation@10"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "markdownDocumentReader.openPreviewToSide",
+        "key": "ctrl+k v",
+        "mac": "cmd+k v",
+        "when": "editorLangId == markdown"
+      }
+    ],
+    "configuration": {
+      "title": "Markdown Document Reader",
+      "properties": {
+        "markdownDocumentReader.defaultWidth": {
+          "type": "string",
+          "enum": [
+            "narrow",
+            "comfortable",
+            "wide"
+          ],
+          "enumDescriptions": [
+            "Optimized for focused reading.",
+            "Balanced document width.",
+            "More room for tables and code."
+          ],
+          "default": "comfortable",
+          "description": "Default width of the document page."
+        },
+        "markdownDocumentReader.defaultFontSize": {
+          "type": "number",
+          "default": 17,
+          "minimum": 12,
+          "maximum": 28,
+          "description": "Default document font size in pixels."
+        },
+        "markdownDocumentReader.showTableOfContents": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show the table of contents when the document contains headings."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "check": "node --check src/extension.js && node --check media/reader.js",
+    "package": "npx @vscode/vsce package"
+  },
+  "dependencies": {
+    "markdown-it": "^14.1.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.6.0"
+  }
+}
